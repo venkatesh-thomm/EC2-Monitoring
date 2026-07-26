@@ -13,13 +13,19 @@ provider "aws" {
 }
 
 # Data source for latest Ubuntu 22.04 LTS AMI
-data "aws_ami" "ubuntu" {
+data "aws_ami" "joindevops" {
+
   most_recent = true
-  owners      = ["099720109477"] # Canonical
+  owners      = ["973714476881"]
 
   filter {
     name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"]
+    values = ["Redhat-9-DevOps-Practice"]
+  }
+
+  filter {
+    name   = "root-device-type"
+    values = ["ebs"]
   }
 
   filter {
@@ -27,6 +33,7 @@ data "aws_ami" "ubuntu" {
     values = ["hvm"]
   }
 }
+
 
 # VPC and Networking
 resource "aws_vpc" "main" {
@@ -145,7 +152,7 @@ resource "aws_iam_instance_profile" "ec2_cloudwatch" {
 
 # EC2 Instance with CloudWatch Agent
 resource "aws_instance" "monitored" {
-  ami                    = data.aws_ami.ubuntu.id
+  ami                    = data.aws_ami.joindevops.id
   instance_type          = var.instance_type
   subnet_id              = aws_subnet.public.id
   vpc_security_group_ids = [aws_security_group.ec2.id]
@@ -345,12 +352,12 @@ resource "aws_iam_role_policy" "lambda_remediation" {
 resource "aws_lambda_function" "remediation" {
   filename         = "lambda_function.zip"
   function_name    = "${var.project_name}-auto-remediation"
-  role            = aws_iam_role.lambda_remediation.arn
-  handler         = "lambda_function.lambda_handler"
+  role             = aws_iam_role.lambda_remediation.arn
+  handler          = "lambda_function.lambda_handler"
   source_code_hash = filebase64sha256("lambda_function.zip")
-  runtime         = "python3.11"
-  timeout         = 60
-  architectures   = ["x86_64"]
+  runtime          = "python3.11"
+  timeout          = 60
+  architectures    = ["x86_64"]
 
   environment {
     variables = {
@@ -380,8 +387,8 @@ resource "aws_cloudwatch_dashboard" "main" {
   dashboard_name = "${var.project_name}-dashboard"
 
   dashboard_body = templatefile("${path.module}/configs/dashboard.json", {
-    region      = var.aws_region
-    instance_id = aws_instance.monitored.id
+    region       = var.aws_region
+    instance_id  = aws_instance.monitored.id
     project_name = var.project_name
   })
 }
