@@ -1,30 +1,10 @@
 # EC2 Monitoring & Auto Remediation using AWS
 
-## Overview
+About this project:
 
-This project provisions an AWS EC2 instance using Terraform and configures monitoring using:
+It's a comprehensive AWS monitoring solution that demonstrates CloudWatch metrics, logs, dashboards, alarms, and automated remediation using Lambda functions.
 
-- Amazon CloudWatch
-- CloudWatch Agent
-- CloudWatch Alarms
-- Amazon SNS
-- AWS Lambda
-- IAM Roles
-- AWS Systems Manager (SSM)
-
-The solution monitors:
-
-- CPU Utilization
-- Memory Utilization
-- Disk Utilization
-- EC2 Status Checks
-
-If CPU usage exceeds the configured threshold:
-
-1. CloudWatch Alarm changes to **ALARM**
-2. SNS sends an email notification
-3. Lambda function automatically reboots the EC2 instance
-4. SNS sends a remediation notification
+This project uses Terraform as an Infra as Code tool to create the entire infrastructure in a few minutes!
 
 ---
 
