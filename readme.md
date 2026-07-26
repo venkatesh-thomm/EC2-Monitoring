@@ -117,53 +117,12 @@ cd EC2-Monitoring
 
 ---
 
-## Step 2
+## Step 2 
 
-Initialize Terraform
+chmod +x scripts/deploy.sh
+./scripts/deploy.sh
 
-```
-terraform init
-```
-
----
-
-## Step 3
-
-Validate configuration
-
-```
-terraform validate
-```
-
----
-
-## Step 4
-
-Review infrastructure
-
-```
-terraform plan
-```
-
----
-
-## Step 5
-
-Deploy Infrastructure
-
-```
-terraform apply
-```
-
-Type
-
-```
-yes
-```
-
----
-
-## Step 6
+## Step  3
 
 Confirm SNS Subscription
 
@@ -177,7 +136,7 @@ Confirm Subscription
 
 ---
 
-## Step 7
+## Step 4
 
 Verify Resources
 
@@ -283,51 +242,6 @@ You should receive
 
 ---
 
-# Useful Terraform Commands
-
-Initialize
-
-```
-terraform init
-```
-
-Validate
-
-```
-terraform validate
-```
-
-Plan
-
-```
-terraform plan
-```
-
-Deploy
-
-```
-terraform apply
-```
-
-Destroy
-
-```
-terraform destroy
-```
-
-View Outputs
-
-```
-terraform output
-```
-
-Refresh State
-
-```
-terraform refresh
-```
-
----
 
 # Recreate EC2
 
@@ -440,33 +354,3 @@ Destroy all resources
 ```
 terraform destroy
 ```
-
----
-
-# Technologies Used
-
-- Terraform
-- AWS EC2
-- CloudWatch
-- CloudWatch Agent
-- AWS Lambda
-- Amazon SNS
-- IAM
-- Systems Manager (SSM)
-- Amazon Linux / RHEL
-
----
-
-# Learning Outcomes
-
-This project demonstrates:
-
-- Infrastructure as Code using Terraform
-- CloudWatch Monitoring
-- CloudWatch Agent Installation
-- SNS Notifications
-- Lambda Auto Remediation
-- IAM Best Practices
-- EC2 Monitoring
-- AWS Troubleshooting
-- Production Deployment
