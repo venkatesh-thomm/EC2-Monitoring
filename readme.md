@@ -1,6 +1,5 @@
 # EC2 Monitoring & Auto Remediation using AWS
 
-About this project:
 
 It's a comprehensive AWS monitoring solution that demonstrates CloudWatch metrics, logs, dashboards, alarms, and automated remediation using Lambda functions.
 
@@ -99,7 +98,7 @@ aws sts get-caller-identity
 
 # Execution Order
 
-## Step 1
+* Step 1
 
 Clone repository
 
@@ -111,14 +110,14 @@ cd EC2-Monitoring
 
 ---
 
-## Step 2 
+* Step 2 
 
 ```
 chmod +x scripts/deploy.sh
 ./scripts/deploy.sh
 ```
 
-## Step  3
+* Step  3
 
 Confirm SNS Subscription
 
@@ -132,7 +131,7 @@ Confirm Subscription
 
 ---
 
-## Step 4
+* Step 4
 
 Verify Resources
 
@@ -257,7 +256,7 @@ terraform apply
 
 # Troubleshooting
 
-## CloudWatch Agent not installed
+CloudWatch Agent not installed
 
 ```
 sudo systemctl status amazon-cloudwatch-agent
@@ -277,7 +276,7 @@ sudo cat /var/log/cloud-init-output.log
 
 ---
 
-## Memory Alarm shows Insufficient Data
+Memory Alarm shows Insufficient Data
 
 Verify
 
@@ -291,7 +290,7 @@ CloudWatch Agent is not running.
 
 ---
 
-## SNS Email not received
+SNS Email not received
 
 - Confirm subscription
 - Verify SNS topic
@@ -299,7 +298,7 @@ CloudWatch Agent is not running.
 
 ---
 
-## Lambda not executing
+Lambda not executing
 
 Check
 
@@ -317,7 +316,7 @@ ec2:RebootInstances
 
 ---
 
-## Terraform Profile Error
+Terraform Profile Error
 
 If
 
