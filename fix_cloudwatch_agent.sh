@@ -4,7 +4,7 @@
 
 set -e
 
-export AWS_PROFILE=personal_new
+export AWS_PROFILE=default
 
 # Colors
 RED='\033[0;31m'
