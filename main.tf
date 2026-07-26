@@ -161,8 +161,8 @@ resource "aws_instance" "monitored" {
   user_data = templatefile("${path.module}/scripts/user_data.sh", {
     cloudwatch_config = file("${path.module}/configs/cloudwatch-config.json")
   })
-
-  monitoring = true # Enable detailed monitoring
+  user_data_replace_on_change = true # Force replacement of user_data on change
+  monitoring                  = true # Enable detailed monitoring
 
   tags = {
     Name = "${var.project_name}-monitored-instance"
