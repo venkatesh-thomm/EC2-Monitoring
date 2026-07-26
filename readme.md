@@ -29,55 +29,69 @@ If CPU usage exceeds the configured threshold:
 ---
 
 # Architecture
-
 ```
-                    +-------------------+
-                    |      EC2          |
-                    | CloudWatch Agent  |
-                    +---------+---------+
-                              |
-                              |
-                    CloudWatch Metrics
-                              |
-                              |
-                    CloudWatch Alarms
-                              |
-               +--------------+-------------+
-               |                            |
-            SNS Topic                  Lambda
-               |                            |
-               |                            |
-         Email Notification         Reboot EC2
-```
-
+┌─────────────┐
+│   EC2       │
+│  Instance   │──────┐
+│ (CW Agent)  │      │
+└─────────────┘      │
+                     │ Metrics & Logs
+                     ▼
+              ┌──────────────┐
+              │  CloudWatch  │
+              │   Metrics    │
+              └──────┬───────┘
+                     │
+                     │ Threshold Exceeded
+                     ▼
+              ┌──────────────┐
+              │  CloudWatch  │
+              │    Alarms    │
+              └──────┬───────┘
+                     │
+         ┌───────────┴───────────┐
+         │                       │
+         ▼                       ▼
+    ┌─────────┐           ┌──────────┐
+    │   SNS   │           │  Lambda  │
+    │  Topic  │           │ Function │
+    └────┬────┘           └────┬─────┘
+         │                     │
+         │ Email               │ Auto-Remediation
+         ▼                     ▼
+    ┌─────────┐           ┌──────────┐
+    │  User   │           │   EC2    │
+    │  Email  │           │  Reboot  │
+    └─────────┘           └──────────┘
+```    
 ---
 
 # Project Structure
 
 ```
-EC2-Monitoring/
-│
-├── main.tf
-├── variables.tf
-├── outputs.tf
-├── provider.tf
-├── locals.tf
-├── terraform.tfvars
-│
-├── scripts/
-│   ├── user_data.sh
-│   ├── test_cpu_stress.sh
-│   ├── test_memory_stress.sh
+├── main.tf                      # Main Terraform configuration
+├── variables.tf                 # Input variables
+├── outputs.tf                   # Output values
+├── terraform.tfvars.example     # Example configuration
+├── deploy.sh                    # Automated deployment script
+├── destroy.sh                   # Cleanup script
+├── Makefile                     # Make targets for common tasks
+├── .gitignore                   # Git ignore rules
 │
 ├── lambda/
-│   ├── lambda_function.py
-│   └── build_lambda.sh
+│   ├── lambda_function.py       # Auto-remediation Lambda (Python 3.11)
+│   └── requirements.txt         # Python dependencies
 │
-├── fix_cloudwatch_agent.sh
+├── scripts/
+│   ├── build_lambda.sh          # Build Lambda package for x86_64
+│   ├── user_data.sh             # EC2 initialization script
+│   ├── test_cpu_stress.sh       # CPU stress test script
+│   └── test_memory_stress.sh    # Memory stress test script
 │
-└── README.md
+└── configs/
+    ├── cloudwatch-config.json   # CloudWatch Agent configuration
+    └── dashboard.json           # Dashboard template
 ```
-
 ---
 
 # Prerequisites
@@ -119,8 +133,10 @@ cd EC2-Monitoring
 
 ## Step 2 
 
+```
 chmod +x scripts/deploy.sh
 ./scripts/deploy.sh
+```
 
 ## Step  3
 
@@ -170,9 +186,7 @@ Active: active (running)
 
 # Verify Metrics
 
-Open
-
-AWS Console
+Open -AWS Console
 
 CloudWatch
 
@@ -352,5 +366,7 @@ AWS_PROFILE
 Destroy all resources
 
 ```
+./scripts/destroy.sh
+
 terraform destroy
 ```
