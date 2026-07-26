@@ -1,0 +1,126 @@
+{
+  "agent": {
+    "metrics_collection_interval": 60,
+    "run_as_user": "root"
+  },
+  "logs": {
+    "logs_collected": {
+      "files": {
+        "collect_list": [
+          {
+            "file_path": "/var/log/messages",
+            "log_group_name": "/aws/ec2/ec2-monitoring",
+            "log_stream_name": "{instance_id}/messages",
+            "retention_in_days": 7
+          },
+          {
+            "file_path": "/var/log/secure",
+            "log_group_name": "/aws/ec2/ec2-monitoring",
+            "log_stream_name": "{instance_id}/secure",
+            "retention_in_days": 7
+          },
+          {
+            "file_path": "/var/log/system-info.log",
+            "log_group_name": "/aws/ec2/ec2-monitoring",
+            "log_stream_name": "{instance_id}/system-info",
+            "retention_in_days": 7
+          }
+        ]
+      }
+    }
+  },
+  "metrics": {
+    "namespace": "CWAgent",
+    "append_dimensions": {
+      "InstanceId": "${aws:InstanceId}",
+      "InstanceType": "${aws:InstanceType}"
+    },
+    "metrics_collected": {
+      "cpu": {
+        "measurement": [
+          {
+            "name": "cpu_usage_idle",
+            "rename": "CPU_IDLE",
+            "unit": "Percent"
+          },
+          {
+            "name": "cpu_usage_iowait",
+            "rename": "CPU_IOWAIT",
+            "unit": "Percent"
+          },
+          "cpu_time_guest"
+        ],
+        "metrics_collection_interval": 60,
+        "resources": [
+          "*"
+        ],
+        "totalcpu": false
+      },
+      "disk": {
+        "measurement": [
+          {
+            "name": "used_percent",
+            "rename": "DISK_USED",
+            "unit": "Percent"
+          },
+          "used",
+          "free"
+        ],
+        "metrics_collection_interval": 60,
+        "resources": [
+          "*"
+        ]
+      },
+      "diskio": {
+        "measurement": [
+          "io_time",
+          "read_bytes",
+          "write_bytes",
+          "reads",
+          "writes"
+        ],
+        "metrics_collection_interval": 60,
+        "resources": [
+          "*"
+        ]
+      },
+      "mem": {
+        "measurement": [
+          {
+            "name": "mem_used_percent",
+            "rename": "MEMORY_USED",
+            "unit": "Percent"
+          },
+          "mem_used",
+          "mem_available",
+          "mem_total"
+        ],
+        "metrics_collection_interval": 60
+      },
+      "netstat": {
+        "measurement": [
+          "tcp_established",
+          "tcp_time_wait"
+        ],
+        "metrics_collection_interval": 60
+      },
+      "swap": {
+        "measurement": [
+          {
+            "name": "swap_used_percent",
+            "rename": "SWAP_USED",
+            "unit": "Percent"
+          },
+          "swap_free",
+          "swap_used"
+        ],
+        "metrics_collection_interval": 60
+      }
+    },
+    "aggregation_dimensions": [
+      ["InstanceId"],
+      ["InstanceId", "InstanceType"],
+      []
+    ]
+  }
+}

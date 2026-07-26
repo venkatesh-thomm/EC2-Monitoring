@@ -1,0 +1,39 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+.terraform.lock.hcl
+tfplan
+*.tfvars
+!terraform.tfvars.example
+
+# Lambda
+lambda_function.zip
+*.pyc
+__pycache__/
+.pytest_cache/
+
+# Python
+venv/
+env/
+*.egg-info/
+dist/
+build/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+tmp/
+temp/

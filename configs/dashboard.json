@@ -1,0 +1,239 @@
+{
+  "widgets": [
+    {
+      "type": "metric",
+      "x": 0,
+      "y": 0,
+      "width": 12,
+      "height": 6,
+      "properties": {
+        "metrics": [
+          ["AWS/EC2", "CPUUtilization", {"stat": "Average", "label": "CPU Average"}],
+          ["...", {"stat": "Maximum", "label": "CPU Maximum"}]
+        ],
+        "view": "timeSeries",
+        "stacked": false,
+        "region": "${region}",
+        "title": "CPU Utilization",
+        "period": 300,
+        "yAxis": {
+          "left": {
+            "min": 0,
+            "max": 100
+          }
+        },
+        "annotations": {
+          "horizontal": [
+            {
+              "label": "High CPU Threshold",
+              "value": 80,
+              "fill": "above",
+              "color": "#d62728"
+            }
+          ]
+        },
+        "dimensions": {
+          "InstanceId": "${instance_id}"
+        }
+      }
+    },
+    {
+      "type": "metric",
+      "x": 12,
+      "y": 0,
+      "width": 12,
+      "height": 6,
+      "properties": {
+        "metrics": [
+          ["CWAgent", "MEMORY_USED", "InstanceId", "${instance_id}", {"stat": "Average", "label": "Memory Used %"}]
+        ],
+        "view": "timeSeries",
+        "stacked": false,
+        "region": "${region}",
+        "title": "Memory Utilization",
+        "period": 300,
+        "yAxis": {
+          "left": {
+            "min": 0,
+            "max": 100
+          }
+        },
+        "annotations": {
+          "horizontal": [
+            {
+              "label": "High Memory Threshold",
+              "value": 80,
+              "fill": "above",
+              "color": "#d62728"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "metric",
+      "x": 0,
+      "y": 6,
+      "width": 12,
+      "height": 6,
+      "properties": {
+        "metrics": [
+          ["CWAgent", "DISK_USED", "InstanceId", "${instance_id}", {"stat": "Average", "label": "Disk Used % (/)"}]
+        ],
+        "view": "timeSeries",
+        "stacked": false,
+        "region": "${region}",
+        "title": "Disk Utilization",
+        "period": 300,
+        "yAxis": {
+          "left": {
+            "min": 0,
+            "max": 100
+          }
+        },
+        "annotations": {
+          "horizontal": [
+            {
+              "label": "High Disk Threshold",
+              "value": 85,
+              "fill": "above",
+              "color": "#d62728"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "metric",
+      "x": 12,
+      "y": 6,
+      "width": 12,
+      "height": 6,
+      "properties": {
+        "metrics": [
+          ["AWS/EC2", "NetworkIn", "InstanceId", "${instance_id}", {"stat": "Sum", "label": "Network In"}],
+          [".", "NetworkOut", ".", ".", {"stat": "Sum", "label": "Network Out"}]
+        ],
+        "view": "timeSeries",
+        "stacked": false,
+        "region": "${region}",
+        "title": "Network Traffic",
+        "period": 300,
+        "yAxis": {
+          "left": {
+            "min": 0
+          }
+        }
+      }
+    },
+    {
+      "type": "metric",
+      "x": 0,
+      "y": 12,
+      "width": 12,
+      "height": 6,
+      "properties": {
+        "metrics": [
+          ["CWAgent", "diskio_read_bytes", "InstanceId", "${instance_id}", {"stat": "Sum", "label": "Disk Read"}],
+          [".", "diskio_write_bytes", ".", ".", {"stat": "Sum", "label": "Disk Write"}]
+        ],
+        "view": "timeSeries",
+        "stacked": false,
+        "region": "${region}",
+        "title": "Disk I/O",
+        "period": 300,
+        "yAxis": {
+          "left": {
+            "min": 0
+          }
+        }
+      }
+    },
+    {
+      "type": "metric",
+      "x": 12,
+      "y": 12,
+      "width": 12,
+      "height": 6,
+      "properties": {
+        "metrics": [
+          ["AWS/EC2", "StatusCheckFailed", "InstanceId", "${instance_id}", {"stat": "Maximum", "label": "Status Check Failed"}],
+          [".", "StatusCheckFailed_Instance", ".", ".", {"stat": "Maximum", "label": "Instance Status Check"}],
+          [".", "StatusCheckFailed_System", ".", ".", {"stat": "Maximum", "label": "System Status Check"}]
+        ],
+        "view": "timeSeries",
+        "stacked": false,
+        "region": "${region}",
+        "title": "Status Checks",
+        "period": 60,
+        "yAxis": {
+          "left": {
+            "min": 0,
+            "max": 1
+          }
+        }
+      }
+    },
+    {
+      "type": "log",
+      "x": 0,
+      "y": 18,
+      "width": 24,
+      "height": 6,
+      "properties": {
+        "query": "SOURCE '/aws/ec2/${project_name}'\n| fields @timestamp, @message\n| sort @timestamp desc\n| limit 100",
+        "region": "${region}",
+        "title": "Recent Logs",
+        "stacked": false
+      }
+    },
+    {
+      "type": "metric",
+      "x": 0,
+      "y": 24,
+      "width": 8,
+      "height": 3,
+      "properties": {
+        "metrics": [
+          ["AWS/EC2", "CPUUtilization", "InstanceId", "${instance_id}", {"stat": "Average"}]
+        ],
+        "view": "singleValue",
+        "region": "${region}",
+        "title": "Current CPU %",
+        "period": 300
+      }
+    },
+    {
+      "type": "metric",
+      "x": 8,
+      "y": 24,
+      "width": 8,
+      "height": 3,
+      "properties": {
+        "metrics": [
+          ["CWAgent", "MEMORY_USED", "InstanceId", "${instance_id}", {"stat": "Average"}]
+        ],
+        "view": "singleValue",
+        "region": "${region}",
+        "title": "Current Memory %",
+        "period": 300
+      }
+    },
+    {
+      "type": "metric",
+      "x": 16,
+      "y": 24,
+      "width": 8,
+      "height": 3,
+      "properties": {
+        "metrics": [
+          ["CWAgent", "DISK_USED", "InstanceId", "${instance_id}", {"stat": "Average"}]
+        ],
+        "view": "singleValue",
+        "region": "${region}",
+        "title": "Current Disk %",
+        "period": 300
+      }
+    }
+  ]
+}
