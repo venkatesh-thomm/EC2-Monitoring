@@ -389,5 +389,12 @@ or
 terraform destroy
 ```
 
-
+## To Copy files 
+```
+scp test_cpu_stress.sh test_memory_stress.sh ec2-user@100.60.66.40:~
+```
+## To test the stress run scripts at a time
+```
+./test_cpu_stress.sh & ./test_memory_stress.sh &
+```
 

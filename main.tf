@@ -198,10 +198,10 @@ resource "aws_cloudwatch_log_group" "ec2_logs" {
 resource "aws_cloudwatch_metric_alarm" "cpu_high" {
   alarm_name          = "${var.project_name}-high-cpu"
   comparison_operator = "GreaterThanThreshold"
-  evaluation_periods  = "2"
+  evaluation_periods  = "1"
   metric_name         = "CPUUtilization"
   namespace           = "AWS/EC2"
-  period              = "180"
+  period              = "60"
   statistic           = "Average"
   threshold           = var.cpu_threshold
   alarm_description   = "This metric monitors EC2 CPU utilization"
@@ -219,10 +219,10 @@ resource "aws_cloudwatch_metric_alarm" "cpu_high" {
 resource "aws_cloudwatch_metric_alarm" "memory_high" {
   alarm_name          = "${var.project_name}-high-memory"
   comparison_operator = "GreaterThanThreshold"
-  evaluation_periods  = "2"
+  evaluation_periods  = "1"
   metric_name         = "MEMORY_USED"
   namespace           = "CWAgent"
-  period              = "180"
+  period              = "60"
   statistic           = "Average"
   threshold           = var.memory_threshold
   alarm_description   = "This metric monitors EC2 memory utilization"
@@ -240,10 +240,10 @@ resource "aws_cloudwatch_metric_alarm" "memory_high" {
 resource "aws_cloudwatch_metric_alarm" "disk_high" {
   alarm_name          = "${var.project_name}-high-disk"
   comparison_operator = "GreaterThanThreshold"
-  evaluation_periods  = "2"
+  evaluation_periods  = "1" # The metric must be above the threshold for 1 consecutive check.
   metric_name         = "DISK_USED"
   namespace           = "CWAgent"
-  period              = "180"
+  period              = "60" # CloudWatch checks the metric every 60 seconds (1 minute).
   statistic           = "Average"
   threshold           = var.disk_threshold
   alarm_description   = "This metric monitors EC2 disk utilization"
@@ -265,7 +265,7 @@ resource "aws_cloudwatch_metric_alarm" "disk_high" {
 resource "aws_cloudwatch_metric_alarm" "status_check_failed" {
   alarm_name          = "${var.project_name}-status-check-failed"
   comparison_operator = "GreaterThanThreshold"
-  evaluation_periods  = "2"
+  evaluation_periods  = "1" # The metric must be above the threshold for 1 consecutive check.
   metric_name         = "StatusCheckFailed"
   namespace           = "AWS/EC2"
   period              = "60"

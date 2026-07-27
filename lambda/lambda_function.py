@@ -20,7 +20,7 @@ PROJECT_NAME = os.environ.get('PROJECT_NAME', 'ec2-monitoring')
 
 # Remediation actions configuration
 REMEDIATION_ACTIONS = {
-    'high-cpu': 'reboot',
+    'high-cpu': 'reboot', # # Change to 'stop' or add custom 
     'high-memory': 'reboot',
     'status-check-failed': 'reboot',
 }
