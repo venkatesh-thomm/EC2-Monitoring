@@ -201,7 +201,7 @@ resource "aws_cloudwatch_metric_alarm" "cpu_high" {
   evaluation_periods  = "2"
   metric_name         = "CPUUtilization"
   namespace           = "AWS/EC2"
-  period              = "300"
+  period              = "180"
   statistic           = "Average"
   threshold           = var.cpu_threshold
   alarm_description   = "This metric monitors EC2 CPU utilization"
@@ -222,7 +222,7 @@ resource "aws_cloudwatch_metric_alarm" "memory_high" {
   evaluation_periods  = "2"
   metric_name         = "mem_used_percent"
   namespace           = "CWAgent"
-  period              = "300"
+  period              = "180"
   statistic           = "Average"
   threshold           = var.memory_threshold
   alarm_description   = "This metric monitors EC2 memory utilization"
@@ -243,7 +243,7 @@ resource "aws_cloudwatch_metric_alarm" "disk_high" {
   evaluation_periods  = "2"
   metric_name         = "disk_used_percent"
   namespace           = "CWAgent"
-  period              = "300"
+  period              = "180"
   statistic           = "Average"
   threshold           = var.disk_threshold
   alarm_description   = "This metric monitors EC2 disk utilization"
