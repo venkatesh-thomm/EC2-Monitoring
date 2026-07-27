@@ -62,13 +62,20 @@
             "name": "used_percent",
             "rename": "DISK_USED",
             "unit": "Percent"
-          },
-          "used",
-          "free"
+          }
         ],
         "metrics_collection_interval": 60,
         "resources": [
           "*"
+        ],
+        "ignore_file_system_types": [
+          "sysfs",
+          "devtmpfs",
+          "tmpfs",
+          "overlay",
+          "squashfs",
+          "proc",
+          "devfs"
         ]
       },
       "diskio": {
@@ -118,8 +125,13 @@
       }
     },
     "aggregation_dimensions": [
-      ["InstanceId"],
-      ["InstanceId", "InstanceType"],
+      [
+        "InstanceId"
+      ],
+      [
+        "InstanceId",
+        "InstanceType"
+      ],
       []
     ]
   }
