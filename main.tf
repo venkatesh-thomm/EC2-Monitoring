@@ -252,7 +252,10 @@ resource "aws_cloudwatch_metric_alarm" "disk_high" {
   dimensions = {
     InstanceId = aws_instance.monitored.id
     path       = "/"
+    device     = "/dev/mapper/RootVG-rootVol"
+    fstype     = "xfs"
   }
+  treat_missing_data = "notBreaching"
 
   tags = {
     Name = "${var.project_name}-disk-alarm"
