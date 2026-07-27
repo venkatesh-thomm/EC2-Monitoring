@@ -75,7 +75,9 @@
           "overlay",
           "squashfs",
           "proc",
-          "devfs"
+          "devfs",
+          "tracefs",
+          "cgroup2"
         ]
       },
       "diskio": {
